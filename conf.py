@@ -69,20 +69,19 @@ else:
     SUFFIX = '.rst'
 
 # Add RTD Static Path. Add to the end because it overwrites previous files.
-if not 'html_static_path' in globals():
+if 'html_static_path' not in globals():
     html_static_path = []
 if os.path.exists('_static'):
     html_static_path.append('_static')
 
 # Add RTD Theme only if they aren't overriding it already
 using_rtd_theme = (
-    (
-        'html_theme' in globals() and
-        html_theme in ['default'] and
-        # Allow people to bail with a hack of having an html_style
-        'html_style' not in globals()
-    ) or 'html_theme' not in globals()
+    'html_theme' in globals()
+    and html_theme in {'default'}
+    and 'html_style' not in globals()
+    or 'html_theme' not in globals()
 )
+
 if using_rtd_theme:
     theme = importlib.import_module('sphinx_rtd_theme')
     html_theme = 'sphinx_rtd_theme'
@@ -152,9 +151,9 @@ context = {
 
 
 if 'html_context' in globals():
-    
+
     html_context.update(context)
-    
+
 else:
     html_context = context
 
